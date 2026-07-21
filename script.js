@@ -56,6 +56,17 @@ const RECIPES = [
 let backpack = { '💧': 5, '🍞': 3, '🥩': 2, '🥬': 2, '🍅': 2, '🧀': 2 };
 let pot = [];
 
+
+// 控制新手教程弹窗显示/隐藏
+function toggleHelpModal(show) {
+    const helpModal = document.getElementById('help-modal');
+    if (show) {
+        helpModal.classList.remove('hidden');
+    } else {
+        helpModal.classList.add('hidden');
+    }
+}
+
 // 选择角色
 function selectChar(avatar, name, el) {
     pet.avatar = avatar; pet.name = name;
@@ -75,11 +86,13 @@ function confirmCharacter() {
 
     startLoop();
     showTab('bag');
+    toggleHelpModal(true);
 }
 
 function changeBgColor(color) {
     document.getElementById('game-container').style.backgroundColor = color;
 }
+
 
 // 场景切换
 function changeScene(scene) {
