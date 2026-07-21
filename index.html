@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的梦幻小屋 🏡</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container" id="game-container">
+        <div id="select-screen" class="screen">
+            <h2>选择你的宠物伙伴</h2>
+            <div class="character-select">
+                <div class="char-card selected" onclick="selectChar('🐱', '胖橘', this)">🐱 胖橘猫</div>
+                <div class="char-card" onclick="selectChar('🐶', '柴柴', this)">🐶 柴犬</div>
+                <div class="char-card" onclick="selectChar('🐧', '企鹅', this)">🐧 企鹅仔</div>
+                <div class="char-card" onclick="selectChar('🐰', '兔兔', this)">🐰 兔子</div>
+            </div>
+            <input type="text" id="pet-name-input" value="皮皮" placeholder="输入宠物名字">
+            <button class="main-btn" onclick="confirmCharacter()">进入小屋 🚀</button>
+        </div>
+
+        <div id="main-screen" class="screen hidden">
+            <div class="header">
+                <div class="pet-info"><span id="char-icon">🐱</span> <b id="display-name">皮皮</b></div>
+                <div class="bg-picker">🎨 壁纸: <input type="color" id="bg-color-picker" value="#ffeaa7" onchange="changeBgColor(this.value)"></div>
+                <div class="coin-badge">💰 <span id="coins">300</span></div>
+            </div>
+
+            <div class="stats-panel">
+                <div class="stat-item">🍖 饱腹 <div class="bar"><div id="hunger-bar" class="fill green"></div></div></div>
+                <div class="stat-item">💧 水分 <div class="bar"><div id="thirst-bar" class="fill blue"></div></div></div>
+                <div class="stat-item">💤 睡眠 <div class="bar"><div id="sleep-bar" class="fill purple"></div></div></div>
+                <div class="stat-item">🎈 娱乐 <div class="bar"><div id="fun-bar" class="fill yellow"></div></div></div>
+                <div class="stat-item">💢 愤怒 <div class="bar"><div id="anger-bar" class="fill red"></div></div></div>
+                <div class="stat-item">❤️ 好感 <div class="bar"><div id="love-bar" class="fill pink"></div></div></div>
+            </div>
+
+            <div class="viewport" id="viewport">
+                <div class="scene-title" id="scene-title">🛋️ 主客厅</div>
+                <div class="bubble" id="status-bubble">快带我去探索吧！</div>
+                <div class="pet-display" id="pet-display">🐱</div>
+            </div>
+
+            <div class="location-nav">
+                <button onclick="changeScene('living')">🛋️ 客厅</button>
+                <button onclick="changeScene('dining')">🍽️ 饭厅</button>
+                <button onclick="changeScene('bedroom')">🛏️ 卧室</button>
+                <button onclick="changeScene('garden')">🌳 花园</button>
+            </div>
+
+            <div class="nav-bar">
+                <button onclick="showTab('bag')">🎒 背包</button>
+                <button onclick="showTab('kitchen')">🍳 厨房合成</button>
+                <button onclick="showTab('shop')">🛒 超市</button>
+                <button onclick="showTab('chat')">💬 聊天</button>
+                <button onclick="showTab('work')">💼 真实打工</button>
+            </div>
+
+            <div id="panel-content" class="panel-content">
+                </div>
+        </div>
+
+        <div id="work-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3 id="work-title">工作中...</h3>
+                <div id="work-game-area"></div>
+                <button class="main-btn" style="margin-top:10px;" onclick="closeWorkModal()">提前结账退出</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
