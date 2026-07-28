@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的梦幻小屋 🏡</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container" id="game-container">
+        <div id="select-screen" class="screen">
+            <h2>选择你的宠物伙伴</h2>
+            <div class="character-select">
+                <div class="char-card selected" onclick="selectChar('🐱', '胖橘', this)">🐱 胖橘猫</div>
+                <div class="char-card" onclick="selectChar('🐶', '柴柴', this)">🐶 柴犬</div>
+                <div class="char-card" onclick="selectChar('🐧', '企鹅', this)">🐧 企鹅仔</div>
+                <div class="char-card" onclick="selectChar('🐰', '兔兔', this)">🐰 兔子</div>
+            </div>
+            <input type="text" id="pet-name-input" value="皮皮" placeholder="输入宠物名字">
+            <button class="main-btn" onclick="confirmCharacter()">进入小屋 🚀</button>
+        </div>
+
+        <div id="main-screen" class="screen hidden">
+            <div class="header">
+            <div class="pet-info"><span id="char-icon">🐱</span> <b id="display-name">皮皮</b></div>
+            <div class="bg-picker">🎨 壁纸: <input type="color" id="bg-color-picker" value="#ffeaa7" onchange="changeBgColor(this.value)"></div>
+            <button onclick="saveGame()" style="background:#00b894;color:white;border:none;padding:2px 6px;border-radius:5px;cursor:pointer;font-weight:bold;">💾 存盘</button>
+            <button onclick="loadGame()" style="background:#0984e3;color:white;border:none;padding:2px 6px;border-radius:5px;cursor:pointer;font-weight:bold;">📂 读盘</button>
+            <button onclick="toggleHelpModal(true)" style="background:#0984e3;color:white;border:none;padding:2px 6px;border-radius:5px;cursor:pointer;font-weight:bold;">❓ 教程</button>
+             <div class="coin-badge">💰 <span id="coins">300</span></div>
+        </div>
+
+            <div class="stats-panel">
+                <div class="stat-item">🍖 饱腹 <div class="bar"><div id="hunger-bar" class="fill green"></div></div></div>
+                <div class="stat-item">💧 水分 <div class="bar"><div id="thirst-bar" class="fill blue"></div></div></div>
+                <div class="stat-item">💤 睡眠 <div class="bar"><div id="sleep-bar" class="fill purple"></div></div></div>
+                <div class="stat-item">🎈 娱乐 <div class="bar"><div id="fun-bar" class="fill yellow"></div></div></div>
+                <div class="stat-item">💢 愤怒 <div class="bar"><div id="anger-bar" class="fill red"></div></div></div>
+                <div class="stat-item">❤️ 好感 <div class="bar"><div id="love-bar" class="fill pink"></div></div></div>
+            </div>
+
+            <div class="viewport" id="viewport">
+                <div class="scene-title" id="scene-title">🛋️ 主客厅</div>
+                <div class="bubble" id="status-bubble">快带我去探索吧！</div>
+                <div class="pet-display" id="pet-display">🐱</div>
+            </div>
+
+            <div class="location-nav">
+                <button onclick="changeScene('living')">🛋️ 客厅</button>
+                <button onclick="changeScene('dining')">🍽️ 饭厅</button>
+                <button onclick="changeScene('bedroom')">🛏️ 卧室</button>
+                <button onclick="changeScene('garden')">🌳 花园</button>
+            </div>
+
+            <div class="nav-bar">
+                <button onclick="showTab('bag')">🎒 背包</button>
+                <button onclick="showTab('kitchen')">🍳 厨房合成</button>
+                <button onclick="showTab('shop')">🛒 超市</button>
+                <button onclick="showTab('chat')">💬 聊天</button>
+                <button onclick="showTab('work')">💼 真实打工</button>
+            </div>
+
+            <div id="panel-content" class="panel-content">
+                </div>
+        </div>
+
+        <div id="work-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3 id="work-title">工作中...</h3>
+                <div id="work-game-area"></div>
+                <button class="main-btn" style="margin-top:10px;" onclick="closeWorkModal()">提前结账退出</button>
+            </div>
+        </div>
+        <div id="help-modal" class="modal hidden">
+          <div class="modal-content" style="text-align: left; max-height: 85%; overflow-y: auto; font-size: 0.8rem; line-height: 1.5;">
+                <h3 style="text-align: center; color: #fdcb6e; margin-top: 0;">📖 梦幻小屋·游玩指南与手册</h3>
+        
+               <h4 style="color: #74b9ff; margin: 8px 0 4px 0;">🎮 基础玩法说明</h4>
+              <ul>
+                 <li><b>🎨 换壁纸</b>：点击顶部栏的色彩选择器，即可随心更换小屋背景颜色。</li>
+                    <li><b>🍽️ 场景切换与喂食</b>：点击中间导航切换客厅、饭厅、卧室、花园。<b>注意：只有在【🍽️ 饭厅】才可以给宠物喂食！</b></li>
+                 <li><b>🎒 背包与使用</b>：在底部【🎒 背包】可查看持有的食物与水，点击即可食用。</li>
+                    <li><b>🛒 购买物品</b>：在底部【🛒 超市】使用金币购买基础食材与饮料。水/牛奶直接加水分，食材用于合成或补充饱腹感。</li>
+                    <li><b>🍳 厨房做饭</b>：切换到【🍳 厨房合成】，点击背包食材放入锅中（最多4种），再点“开始烹饪”。若点错食材，<b>直接点击锅里的食材图标即可取出退回</b>。</li>
+                    <li><b>📖 菜谱图鉴</b>：在厨房界面点击右上角“📖 查看菜谱图鉴”，即可查阅各种高阶美食的合成配方，避免盲目炸锅。</li>
+                    <li><b>💼 真实打工</b>：金币不够时，点击【💼 真实打工】面板，参与采矿（手速爆破）、收银（敏捷反应）或扫落叶（清扫整理）微操游戏赚取金币。</li>
+                    <li><b>💬 AI 互动聊天</b>：点击【💬 聊天】面板可以和宠物实时对话，宠物会根据当前的心情与状态回复你！</li>
+               </ul>
+
+              <h4 style="color: #ff7675; margin: 8px 0 4px 0;">⚠️ 宠物养育注意事项</h4>
+             <ol>
+                    <li><b>状态衰减</b>：饱腹、水分、睡眠和娱乐值会随时间自然下降，请密切关注状态栏！</li>
+                   <li><b>太饱不能喂</b>：饱腹感≥90 时宠物会撑得吃不下，拒绝进食。</li>
+                   <li><b>困了要睡觉</b>：睡眠值过低时请切换到【🛏️ 卧室】睡觉，睡眠恢复满后会自动醒来。</li>
+                   <li><b>心情与愤怒</b>：如果长时间不陪宠物玩耍（娱乐值低），宠物的愤怒值会上升！多带它去【🌳 花园】散步可以迅速降火并增加好感度。</li>
+                   <li><b>饮品与食物区别</b>：水和饮料只能补充水分，不会增加饱腹感；食物只能补充饱腹感，不会加水。</li>
+              </ol>
+
+             <button class="main-btn" style="margin-top: 12px; background: #00b894;" onclick="toggleHelpModal(false)">我明白啦，开启冒险！🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
